@@ -1,4 +1,5 @@
 using Core;
+using DefaultNamespace;
 using Support;
 using UniRx;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace States
     public class LobbyRoot : DisposableBehaviour<Unit>
     {
         [SerializeField] private UnityEngine.UI.Button _playButton;
+        [SerializeField] private ScrollingBackground _scrollingBackground;
     
         private const string SceneName = "GameStart";
     
@@ -23,6 +25,10 @@ namespace States
                         .AddTo(Disposables);
                 
                 }).AddTo(Disposables);
+
+            _scrollingBackground
+                .Init(new Unit())
+                .AddTo(Disposables);
         }
     }
 }
