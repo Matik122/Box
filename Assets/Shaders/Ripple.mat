@@ -103,9 +103,9 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RippleSpeed: 0.67
-    - _RippleStrenght: 0.082
-    - _RipplesCount: 2.07
+    - _RippleSpeed: 2.46
+    - _RippleStrenght: 0.146
+    - _RipplesCount: 3.02
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

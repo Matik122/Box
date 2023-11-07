@@ -6,12 +6,20 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
-namespace DefaultNamespace
+namespace Lobby
 {
-    public class ScrollingBackground : DisposableBehaviour<Unit>
+    public class ScrollingBackground : DisposableClass
     {
-        [SerializeField] private RawImage _background;
-        [SerializeField] private float _x, _y;
+        private readonly RawImage _background;
+        private readonly float _x;
+        private readonly float _y;
+
+        public ScrollingBackground(RawImage background, float x, float y = 0)
+        {
+            _background = background;
+            _x = x;
+            _y = y;
+        }
         
         protected override void OnInit()
         {
