@@ -4,18 +4,19 @@ using UniRx;
 
 namespace States
 {
-    public class LobbyState : GameStateBase<Unit>
+    public class GameState : GameStateBase<Unit>
     {
         private readonly GameMachine _gameMachine;
+    
         private readonly CompositeDisposable _rootDisposable = new();
     
-        private const string StateSceneName = "Lobby";
+        private const string StateSceneName = "Game";
         
-        public LobbyState(GameMachine gameMachine)
+        public GameState(GameMachine gameMachine)
         {
             _gameMachine = gameMachine;
         }
-    
+        
         protected override void Init()
         {
             SceneExtensions.LoadScene(StateSceneName)
@@ -33,24 +34,24 @@ namespace States
         {
             var subscriptions = new CompositeDisposable();
         
-            var lobbyRoot = SceneExtensions.LoadSceneRoot<LobbyRoot>();
+            var gameRoot = SceneExtensions.LoadSceneRoot<GameRoot>();
 
-            lobbyRoot
-                .Init(new LobbyRoot.Model(OnGameStartRequested))
+            gameRoot
+                .Init(new Unit())
                 .AddTo(subscriptions);
 
             return subscriptions;
         }
-
-        private void OnGameStartRequested()
+        
+        private void OnExit()
         {
-            _gameMachine.ChangeState<GameState>();
+            _gameMachine.ChangeState<LobbyState>();
         }
 
         protected override void Deinit()
         {
             _rootDisposable.Clear();
         }
-    }
 
+    }
 }

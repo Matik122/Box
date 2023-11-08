@@ -1,3 +1,4 @@
+using System;
 using Core;
 using Lobby;
 using Support;
@@ -7,8 +8,18 @@ using UnityEngine.UI;
 
 namespace States
 {
-    public class LobbyRoot : DisposableBehaviour<Unit>
+    public class LobbyRoot : DisposableBehaviour<LobbyRoot.Model>
     {
+        public class Model
+        {
+            public readonly Action OnStartGame;
+            
+            public Model(Action onStartGame)
+            {
+                OnStartGame = onStartGame;
+            }
+        }
+        
         [SerializeField] private Button _playButton;
         [SerializeField] private Transform _playButtonTransform;
         [SerializeField] private RawImage _visualBackground;
@@ -16,19 +27,14 @@ namespace States
         [SerializeField] private float _duration;
         [SerializeField] private float _uvMovingByX;
 
-        private const string SceneName = "GameStart";
-    
         protected override void OnInit()
         {
             base.OnInit();
 
             _playButton
-                .OnClickAsObservable().SafeSubscribe(_ =>
-                {
-                    SceneExtensions.LoadScene(SceneName)
-                        .EmptySubscribe()
-                        .AddTo(Disposables);
-                }).AddTo(Disposables);
+                .OnClickAsObservable()
+                .SafeSubscribe(_ => ActiveModel.OnStartGame?.Invoke())
+                .AddTo(Disposables);
             
             new ScrollingBackground(_visualBackground, _uvMovingByX)
                 .Init()

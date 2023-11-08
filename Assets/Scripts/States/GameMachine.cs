@@ -24,11 +24,11 @@ namespace States
             _states.Add(state.GetType(), state);
         }
 
-        public void ChangeState<T>(object data)
+        public void ChangeState<T>()
         {
             _currentState?.Deinit();
             _currentState = _states[typeof(T)];
-            _currentState.Init(data);
+            _currentState.Init();
         }
 
         private void OnDisposed()

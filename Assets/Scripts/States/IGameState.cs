@@ -2,15 +2,15 @@ namespace States
 {
     public interface IGameState
     {
-        void Init(object data);
+        void Init();
         void Deinit();
     }
     
-    public abstract class GameStateBase<T> : IGameState where T : class
+    public abstract class GameStateBase<T> : IGameState where T : struct
     {
-        void IGameState.Init(object data)
+        void IGameState.Init()
         {
-            Init(data as T);
+            Init();
         }
 
         void IGameState.Deinit()
@@ -18,7 +18,7 @@ namespace States
             Deinit();
         }
 
-        protected abstract void Init(T model);
+        protected abstract void Init();
         protected abstract void Deinit();
     }
 }
