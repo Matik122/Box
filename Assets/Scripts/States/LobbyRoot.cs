@@ -36,7 +36,7 @@ namespace States
         {
             base.OnInit();
 
-            var playConfirmWindow = ActiveModel.WindowResolver.GetPlayConfirmWindowModel(ActiveModel.OnStartGame,ActiveModel.WindowsService);
+            var playConfirmWindow = ActiveModel.WindowResolver.GetPlayConfirmWindowModel(ActiveModel.OnStartGame);
 
             _playButton
                 .OnClickAsObservable()

@@ -37,7 +37,7 @@ namespace Windows
 
             _quitButton
                 .OnClickAsObservable()
-                .SafeSubscribe(_ => ActiveModel.WindowsService.CurrentWindow.Value.Close())
+                .SafeSubscribe(_ => ActiveModel.WindowsService.Close())
                 .AddTo(Disposables);
         }
     }

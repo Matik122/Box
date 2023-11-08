@@ -23,7 +23,7 @@ namespace States
         private void StartRoot()
         {
             Observable.ReturnUnit()
-                .Do(_ => _windowsService.Init(new WindowsService.Model()).AddTo(_rootDisposable))
+                .ContinueWith(_ => InitServices())
                 .ContinueWith(_ => InitStates())
                 .SafeSubscribe(_ => LoadStage())
                 .AddTo(_rootDisposable);
@@ -33,7 +33,7 @@ namespace States
         {
             _gameMachine = new GameMachine();
             
-            var windowResolver = new WindowResolver();
+            var windowResolver = new WindowResolver(_windowsService);
             
             _gameMachine
                 .Init()
@@ -41,6 +41,13 @@ namespace States
         
             _gameMachine.AddState(new LobbyState(_gameMachine,_windowsService,windowResolver));
             _gameMachine.AddState(new GameState(_gameMachine));
+
+            return Observable.ReturnUnit();
+        }
+        
+        private IObservable<Unit> InitServices()
+        {
+            _windowsService.Init(new WindowsService.Model()).AddTo(_rootDisposable);
 
             return Observable.ReturnUnit();
         }

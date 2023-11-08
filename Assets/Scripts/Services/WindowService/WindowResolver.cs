@@ -5,9 +5,16 @@ namespace Services
 {
     public class WindowResolver
     {
-        public PlayConfirmWindow.Model GetPlayConfirmWindowModel(Action onPlayClick,WindowsService windowsService)
+        private readonly WindowsService _windowsService;
+        
+        public WindowResolver(WindowsService windowsService)
         {
-            return new(onPlayClick, windowsService);
+            _windowsService = windowsService;
+        }
+        
+        public PlayConfirmWindow.Model GetPlayConfirmWindowModel(Action onPlayClick)
+        {
+            return new(onPlayClick, _windowsService);
         }
     }
 }

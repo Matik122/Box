@@ -72,7 +72,7 @@ namespace Services
             currentWindow.Open(model);
 
             _windowsStack.Push(currentWindow);
-
+            
             OnWindowsQueueChanged();
         }
 
@@ -100,8 +100,7 @@ namespace Services
         private WindowBase GetOrCreateWindow(Type modelType)
         {
             var instance = _instances.Find(instanceArg =>
-                instanceArg.ModelType == modelType &&
-                !instanceArg.IsAnimationActive.Value);
+                instanceArg.ModelType == modelType);
 
             if (instance == null)
             {

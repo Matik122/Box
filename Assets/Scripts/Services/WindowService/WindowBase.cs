@@ -14,12 +14,6 @@ namespace Services
         protected T ActiveModel { get; private set; }
 
         protected readonly CompositeDisposable Disposables = new();
-        private readonly CompositeDisposable _animationDisposable = new();
-
-        private void OnDestroy()
-        {
-            _animationDisposable.Clear();
-        }
 
         public sealed override void Open(object model)
         {
@@ -28,6 +22,8 @@ namespace Services
             _safeArea.Fit();
 
             OnOpen();
+            
+            this.gameObject.SetActive(true);
         }
 
         public sealed override void Close()
@@ -35,6 +31,8 @@ namespace Services
             Disposables.Clear();
 
             ActiveModel = default;
+            
+            this.gameObject.SetActive(false);
         }
 
         protected abstract void OnOpen();
@@ -46,10 +44,7 @@ namespace Services
         [SerializeField] private Canvas _canvas;
 
         public abstract Type ModelType { get; }
-        public IReadOnlyReactiveProperty<bool> IsAnimationActive => _isAnimationActive;
-
-        protected readonly ReactiveProperty<bool> _isAnimationActive = new();
-
+      
         public void SetOrder(int order)
         {
             _canvas.sortingOrder = order;
