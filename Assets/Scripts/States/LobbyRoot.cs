@@ -1,6 +1,7 @@
 using System;
 using Core;
 using Lobby;
+using Services;
 using Support;
 using UniRx;
 using UnityEngine;
@@ -13,10 +14,14 @@ namespace States
         public class Model
         {
             public readonly Action OnStartGame;
+            public readonly WindowsService WindowsService;
+            public readonly WindowResolver WindowResolver;
             
-            public Model(Action onStartGame)
+            public Model(Action onStartGame, WindowsService windowsService, WindowResolver windowResolver)
             {
                 OnStartGame = onStartGame;
+                WindowsService = windowsService;
+                WindowResolver = windowResolver;
             }
         }
         
@@ -31,9 +36,11 @@ namespace States
         {
             base.OnInit();
 
+            var playConfirmWindow = ActiveModel.WindowResolver.GetPlayConfirmWindowModel(ActiveModel.OnStartGame,ActiveModel.WindowsService);
+
             _playButton
                 .OnClickAsObservable()
-                .SafeSubscribe(_ => ActiveModel.OnStartGame?.Invoke())
+                .SafeSubscribe(_ => ActiveModel.WindowsService.Open(playConfirmWindow,false))
                 .AddTo(Disposables);
             
             new ScrollingBackground(_visualBackground, _uvMovingByX)

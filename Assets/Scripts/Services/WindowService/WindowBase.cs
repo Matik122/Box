@@ -38,8 +38,7 @@ namespace Services
         }
 
         protected abstract void OnOpen();
-        protected abstract IObservable<Unit> ObserveWindowAnimation(bool appear);
-        
+
     }
     
     public abstract class WindowBase : MonoBehaviour
