@@ -38,7 +38,7 @@ namespace Editor
         {
             buildPlayerOptions.scenes = args;
 
-            buildPlayerOptions.locationPathName = "Builds/Android/Ritmi.apk";
+            buildPlayerOptions.locationPathName = "Builds/Android/Box.apk";
             buildPlayerOptions.target = BuildTarget.Android;
 
             BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
