@@ -26,7 +26,10 @@ namespace Editor
             var scenesArgument = GetArgumentValue(_commandLineArguments, "-scenes");
             var scenes = scenesArgument.Split(',');
 
-            ExecuteShell().ContinueWith(BuildApk(buildPlayerOptions, scenes)).EmptySubscribe().AddTo(BuildDisposable);
+            ExecuteShell()
+                .ContinueWith(BuildApk(buildPlayerOptions, scenes))
+                .EmptySubscribe()
+                .AddTo(BuildDisposable);
 
             BuildDisposable.Clear();
         }
@@ -95,7 +98,7 @@ namespace Editor
                     }
                     else
                     {
-                        argumentsDict[arg] = null; // Flag without value
+                        argumentsDict[arg] = null;
                     }
                 }
             }
