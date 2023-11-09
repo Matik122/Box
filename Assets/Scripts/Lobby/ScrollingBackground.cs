@@ -1,9 +1,7 @@
-using System;
 using Core;
 using Support;
 using UniRx;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 namespace Lobby
@@ -20,7 +18,7 @@ namespace Lobby
             _x = x;
             _y = y;
         }
-        
+
         protected override void OnInit()
         {
             base.OnInit();
@@ -33,8 +31,8 @@ namespace Lobby
 
         private void MoveBackGround()
         {
-            _background.uvRect = 
-                new Rect(_background.uvRect.position + new Vector2(_x,_y) * Time.deltaTime,_background.uvRect.size);
+            _background.uvRect =
+                new Rect(_background.uvRect.position + new Vector2(_x, _y) * Time.deltaTime, _background.uvRect.size);
         }
     }
 }

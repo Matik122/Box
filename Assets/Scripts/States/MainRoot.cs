@@ -9,11 +9,11 @@ namespace States
     public class MainRoot : MonoBehaviour
     {
         [SerializeField] private WindowsService _windowsService;
-        
+
         private GameMachine _gameMachine;
-    
+
         private readonly CompositeDisposable _rootDisposable = new();
-    
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -32,19 +32,19 @@ namespace States
         private IObservable<Unit> InitStates()
         {
             _gameMachine = new GameMachine();
-            
+
             var windowResolver = new WindowResolver(_windowsService);
-            
+
             _gameMachine
                 .Init()
                 .AddTo(_rootDisposable);
-        
-            _gameMachine.AddState(new LobbyState(_gameMachine,_windowsService,windowResolver));
-            _gameMachine.AddState(new GameState(_gameMachine,_windowsService,windowResolver));
+
+            _gameMachine.AddState(new LobbyState(_gameMachine, _windowsService, windowResolver));
+            _gameMachine.AddState(new GameState(_gameMachine, _windowsService, windowResolver));
 
             return Observable.ReturnUnit();
         }
-        
+
         private IObservable<Unit> InitServices()
         {
             _windowsService.Init(new WindowsService.Model()).AddTo(_rootDisposable);
@@ -56,7 +56,7 @@ namespace States
         {
             _gameMachine.ChangeState<LobbyState>();
         }
-    
+
         private void OnDestroy()
         {
             _rootDisposable.Clear();

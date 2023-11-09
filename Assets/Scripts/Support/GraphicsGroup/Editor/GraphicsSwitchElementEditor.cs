@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace Support.GraphicsGroup.Editor
 {
-    [CustomEditor(typeof(GraphicsSwitchElement), editorForChildClasses: true), CanEditMultipleObjects]
+    [CustomEditor(typeof(GraphicsSwitchElement), true)]
+    [CanEditMultipleObjects]
     public class GraphicsSwitchElementEditor : UnityEditor.Editor
     {
         private GraphicsSwitchElement appliedTarget;

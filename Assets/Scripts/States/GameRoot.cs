@@ -12,18 +12,19 @@ namespace States
         [SerializeField] private RawImage _visualBackground;
         [SerializeField] private Button _quitButton;
         [SerializeField] private float _uvMovingByX;
-        
+
         protected override void OnInit()
         {
             base.OnInit();
-            
-            var playConfirmWindow = ActiveModel.WindowResolver.GetPlayConfirmWindowModel(ActiveModel.OnGameAction,false);
-            
+
+            var playConfirmWindow =
+                ActiveModel.WindowResolver.GetPlayConfirmWindowModel(ActiveModel.OnGameAction, false);
+
             _quitButton
                 .OnClickAsObservable()
-                .SafeSubscribe(_ => ActiveModel.WindowsService.Open(playConfirmWindow,false))
+                .SafeSubscribe(_ => ActiveModel.WindowsService.Open(playConfirmWindow, false))
                 .AddTo(Disposables);
-            
+
             new ScrollingBackground(_visualBackground, _uvMovingByX)
                 .Init()
                 .AddTo(Disposables);

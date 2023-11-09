@@ -1,4 +1,3 @@
-using System;
 using Core;
 using DG.Tweening;
 using Support;
@@ -8,7 +7,7 @@ using UnityEngine;
 namespace Lobby
 {
     public class StartButtonLoop : DisposableClass
-    {    
+    {
         private readonly float _endValue;
         private readonly float _duration;
 
@@ -20,13 +19,12 @@ namespace Lobby
             _endValue = endValue;
             _duration = duration;
         }
-        
+
         protected override void OnInit()
         {
             base.OnInit();
-            
-            _buttonTransform
-                .DOScale(_endValue,_duration)
+
+            _buttonTransform.DOScale(_endValue, _duration)
                 .SetEase(Ease.Linear)
                 .SetLoops(-1, LoopType.Yoyo)
                 .PlayAsObservable()

@@ -21,7 +21,7 @@ namespace Support
                 })
                 .Subscribe(action);
         }
-        
+
         public static IDisposable SafeSubscribe<T>(this IObservable<T> source, Action<T> onNext, Action onCompleted)
         {
             return source
@@ -33,7 +33,7 @@ namespace Support
                 })
                 .Subscribe(onNext, onCompleted);
         }
-        
+
         public static IObservable<T> SkipInitialization<T>(this IObservable<T> source)
         {
             return source.Skip(1);

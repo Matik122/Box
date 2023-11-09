@@ -16,7 +16,7 @@ namespace States
             public readonly Action OnGameAction;
             public readonly WindowsService WindowsService;
             public readonly WindowResolver WindowResolver;
-            
+
             public Model(Action onGameAction, WindowsService windowsService, WindowResolver windowResolver)
             {
                 OnGameAction = onGameAction;
@@ -24,7 +24,7 @@ namespace States
                 WindowResolver = windowResolver;
             }
         }
-        
+
         [SerializeField] private Button _playButton;
         [SerializeField] private Transform _playButtonTransform;
         [SerializeField] private RawImage _visualBackground;
@@ -40,13 +40,13 @@ namespace States
 
             _playButton
                 .OnClickAsObservable()
-                .SafeSubscribe(_ => ActiveModel.WindowsService.Open(playConfirmWindow,false))
+                .SafeSubscribe(_ => ActiveModel.WindowsService.Open(playConfirmWindow, false))
                 .AddTo(Disposables);
-            
+
             new ScrollingBackground(_visualBackground, _uvMovingByX)
                 .Init()
                 .AddTo(Disposables);
-            
+
             new StartButtonLoop(_playButtonTransform, _endValue, _duration)
                 .Init()
                 .AddTo(Disposables);

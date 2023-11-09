@@ -2,6 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Support
 {
@@ -34,7 +35,7 @@ namespace Support
 
         public static T LoadSceneRoot<T>() where T : MonoBehaviour
         {
-            return GameObject.FindObjectOfType<T>();
+            return Object.FindObjectOfType<T>();
         }
 
         public static IObservable<Unit> ObservableSceneLoaded(string sceneName)
@@ -60,12 +61,8 @@ namespace Support
 
                 SceneManager.sceneLoaded += Handler;
 
-                return Disposable.Create(() =>
-                {
-                    SceneManager.sceneLoaded -= Handler;
-                });
+                return Disposable.Create(() => { SceneManager.sceneLoaded -= Handler; });
             });
         }
-
     }
 }

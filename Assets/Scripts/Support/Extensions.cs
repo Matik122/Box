@@ -16,13 +16,10 @@ namespace Support
                     o.OnCompleted();
                 });
                 sequence.Play();
-                return Disposable.Create(() =>
-                {
-                    sequence.Kill();
-                });
+                return Disposable.Create(() => { sequence.Kill(); });
             });
         }
-        
+
         public static IObservable<Tween> PlayAsObservable(this Tween tweener)
         {
             return Observable.Create<Tween>(o =>
@@ -32,10 +29,7 @@ namespace Support
                     o.OnNext(tweener);
                     o.OnCompleted();
                 });
-                return Disposable.Create(() =>
-                {
-                    tweener.Kill();
-                });
+                return Disposable.Create(() => { tweener.Kill(); });
             });
         }
     }

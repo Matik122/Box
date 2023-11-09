@@ -1,5 +1,4 @@
 using System;
-using States;
 using Support;
 using UniRx;
 using UnityEngine;
@@ -22,7 +21,7 @@ namespace Services
             _safeArea.Fit();
 
             OnOpen();
-            
+
             this.gameObject.SetActive(true);
         }
 
@@ -31,20 +30,19 @@ namespace Services
             Disposables.Clear();
 
             ActiveModel = default;
-            
+
             this.gameObject.SetActive(false);
         }
 
         protected abstract void OnOpen();
-
     }
-    
+
     public abstract class WindowBase : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
 
         public abstract Type ModelType { get; }
-      
+
         public void SetOrder(int order)
         {
             _canvas.sortingOrder = order;
@@ -52,7 +50,5 @@ namespace Services
 
         public abstract void Open(object model);
         public abstract void Close();
-
     }
-    
 }

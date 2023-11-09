@@ -11,16 +11,16 @@ namespace States
         private readonly WindowsService _windowsService;
         private readonly WindowResolver _windowResolver;
         private readonly CompositeDisposable _rootDisposable = new();
-    
+
         private const string StateSceneName = "Game";
-        
+
         public GameState(GameMachine gameMachine, WindowsService windowsService, WindowResolver windowResolver)
         {
             _gameMachine = gameMachine;
             _windowsService = windowsService;
             _windowResolver = windowResolver;
         }
-        
+
         protected override void Init()
         {
             SceneExtensions.LoadScene(StateSceneName)
@@ -33,20 +33,20 @@ namespace States
             InitControllers()
                 .AddTo(_rootDisposable);
         }
-    
+
         private IDisposable InitControllers()
         {
             var subscriptions = new CompositeDisposable();
-        
+
             var gameRoot = SceneExtensions.LoadSceneRoot<GameRoot>();
 
             gameRoot
-                .Init(new LobbyRoot.Model(OnExit,_windowsService,_windowResolver))
+                .Init(new LobbyRoot.Model(OnExit, _windowsService, _windowResolver))
                 .AddTo(subscriptions);
 
             return subscriptions;
         }
-        
+
         private void OnExit()
         {
             _gameMachine.ChangeState<LobbyState>();
@@ -56,6 +56,5 @@ namespace States
         {
             _rootDisposable.Clear();
         }
-
     }
 }

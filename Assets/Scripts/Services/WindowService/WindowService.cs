@@ -19,18 +19,22 @@ namespace Services
         private readonly List<WindowBase> _instances = new();
         private readonly Stack<WindowBase> _windowsStack = new();
 
-        public IObservable<Unit> ObserveWindowOpen<T>() => CurrentWindow
-            .Where(window => window != null && window.GetType() == typeof(T))
-            .Select(_ => _).First().AsUnitObservable();
+        public IObservable<Unit> ObserveWindowOpen<T>() =>
+            CurrentWindow.Where(window => window != null && window.GetType() == typeof(T))
+                .Select(_ => _)
+                .First()
+                .AsUnitObservable();
 
-        public IObservable<Unit> ObserveWindowClose<T>() => CurrentWindow.Pairwise()
-            .Where(pair => pair.Previous != null && pair.Previous.GetType() == typeof(T))
-            .Select(_ => _).First().AsUnitObservable();
+        public IObservable<Unit> ObserveWindowClose<T>() =>
+            CurrentWindow.Pairwise()
+                .Where(pair => pair.Previous != null && pair.Previous.GetType() == typeof(T))
+                .Select(_ => _)
+                .First()
+                .AsUnitObservable();
 
         public IObservable<Unit> ObserveWindowFullClose<T>()
         {
-            return _windowClosedObservable
-                .Where(closingWindowType => closingWindowType == typeof(T))
+            return _windowClosedObservable.Where(closingWindowType => closingWindowType == typeof(T))
                 .First()
                 .AsUnitObservable();
         }
@@ -72,7 +76,7 @@ namespace Services
             currentWindow.Open(model);
 
             _windowsStack.Push(currentWindow);
-            
+
             OnWindowsQueueChanged();
         }
 
@@ -92,15 +96,12 @@ namespace Services
 
         protected override void OnInit()
         {
-            Disposable
-                .Create(OnDisposed)
-                .AddTo(Disposables);
+            Disposable.Create(OnDisposed).AddTo(Disposables);
         }
 
         private WindowBase GetOrCreateWindow(Type modelType)
         {
-            var instance = _instances.Find(instanceArg =>
-                instanceArg.ModelType == modelType);
+            var instance = _instances.Find(instanceArg => instanceArg.ModelType == modelType);
 
             if (instance == null)
             {
@@ -112,8 +113,7 @@ namespace Services
 
         private WindowBase CreateWindowInstance(Type modelType)
         {
-            var prefab = _prefabs.Find(windowInstanceArg =>
-                windowInstanceArg.ModelType == modelType);
+            var prefab = _prefabs.Find(windowInstanceArg => windowInstanceArg.ModelType == modelType);
 
             var instance = GameObject.Instantiate(prefab, _anchor);
 
@@ -141,9 +141,7 @@ namespace Services
 
         private void OnWindowsQueueChanged()
         {
-            _currentWindow.Value = _windowsStack.Count > 0
-                ? _windowsStack.Peek()
-                : null;
+            _currentWindow.Value = _windowsStack.Count > 0 ? _windowsStack.Peek() : null;
         }
     }
 }

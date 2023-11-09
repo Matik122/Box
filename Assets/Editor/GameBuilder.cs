@@ -20,7 +20,7 @@ namespace Editor
         {
             var buildPlayerOptions = new BuildPlayerOptions();
 
-            var commandLineArgs = System.Environment.GetCommandLineArgs();
+            var commandLineArgs = Environment.GetCommandLineArgs();
             _commandLineArguments = ParseCommandLineArguments(commandLineArgs);
 
             var scenesArgument = GetArgumentValue(_commandLineArguments, "-scenes");
@@ -41,17 +41,12 @@ namespace Editor
             buildPlayerOptions.locationPathName = "Builds/Android/Box.apk";
             buildPlayerOptions.target = BuildTarget.Android;
 
-            BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
-            BuildSummary summary = report.summary;
+            var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+            var summary = report.summary;
 
             if (summary.result == BuildResult.Succeeded)
-            {
                 Debug.Log("Build succeeded: " + summary.totalSize + " bytes");
-            }
-            else if (summary.result == BuildResult.Failed)
-            {
-                Debug.Log("Build failed");
-            }
+            else if (summary.result == BuildResult.Failed) Debug.Log("Build failed");
 
             return Observable.ReturnUnit();
         }
@@ -69,30 +64,26 @@ namespace Editor
             process.WaitForExit();
 
             if (process.ExitCode == 0)
-            {
                 Debug.Log("Bash file executed successfully");
-            }
             else
-            {
                 Debug.LogError("Failed to execute bash file");
-            }
 
             return Observable.ReturnUnit();
         }
 
         private static Dictionary<string, string> ParseCommandLineArguments(string[] commandLineArgs)
         {
-            Dictionary<string, string> argumentsDict = new Dictionary<string, string>();
+            var argumentsDict = new Dictionary<string, string>();
 
-            for (int i = 0; i < commandLineArgs.Length; i++)
+            for (var i = 0; i < commandLineArgs.Length; i++)
             {
-                string arg = commandLineArgs[i];
+                var arg = commandLineArgs[i];
 
                 if (arg.StartsWith("-"))
                 {
                     if (i < commandLineArgs.Length - 1 && !commandLineArgs[i + 1].StartsWith("-"))
                     {
-                        string value = commandLineArgs[i + 1];
+                        var value = commandLineArgs[i + 1];
                         argumentsDict[arg] = value;
                         i++;
                     }
@@ -108,10 +99,7 @@ namespace Editor
 
         private static string GetArgumentValue(Dictionary<string, string> argumentsDict, string flag)
         {
-            if (argumentsDict.ContainsKey(flag))
-            {
-                return argumentsDict[flag];
-            }
+            if (argumentsDict.ContainsKey(flag)) return argumentsDict[flag];
 
             return null;
         }

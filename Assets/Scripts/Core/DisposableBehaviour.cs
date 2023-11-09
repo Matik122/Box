@@ -30,7 +30,7 @@ namespace Core
         public abstract IDisposable Init(object model);
     }
 
-    public class AbstractDisposableBehaviour<T> :  AbstractDisposableBehaviour
+    public class AbstractDisposableBehaviour<T> : AbstractDisposableBehaviour
     {
         protected CompositeDisposable Disposables;
         protected T ActiveModel { get; private set; }

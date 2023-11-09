@@ -15,7 +15,7 @@ namespace Windows
             public readonly Action OnClick;
             public readonly WindowsService WindowsService;
             public readonly bool IsPlay;
-            
+
             public Model(Action onClick, WindowsService windowsService, bool isPlay)
             {
                 OnClick = onClick;
@@ -29,12 +29,12 @@ namespace Windows
 
         [SerializeField] private GraphicsSwitchGroup _playGroup;
         [SerializeField] private GraphicsSwitchGroup _quitGroup;
-        
+
         protected override void OnOpen()
         {
             var switchedGroup = ActiveModel.IsPlay ? _playGroup : _quitGroup;
             switchedGroup.Switch();
-            
+
             _playButton
                 .OnClickAsObservable()
                 .SafeSubscribe(_ =>
