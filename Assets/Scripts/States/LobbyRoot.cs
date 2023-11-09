@@ -13,13 +13,13 @@ namespace States
     {
         public class Model
         {
-            public readonly Action OnStartGame;
+            public readonly Action OnGameAction;
             public readonly WindowsService WindowsService;
             public readonly WindowResolver WindowResolver;
             
-            public Model(Action onStartGame, WindowsService windowsService, WindowResolver windowResolver)
+            public Model(Action onGameAction, WindowsService windowsService, WindowResolver windowResolver)
             {
-                OnStartGame = onStartGame;
+                OnGameAction = onGameAction;
                 WindowsService = windowsService;
                 WindowResolver = windowResolver;
             }
@@ -36,7 +36,7 @@ namespace States
         {
             base.OnInit();
 
-            var playConfirmWindow = ActiveModel.WindowResolver.GetPlayConfirmWindowModel(ActiveModel.OnStartGame);
+            var playConfirmWindow = ActiveModel.WindowResolver.GetPlayConfirmWindowModel(ActiveModel.OnGameAction);
 
             _playButton
                 .OnClickAsObservable()

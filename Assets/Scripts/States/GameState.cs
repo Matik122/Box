@@ -1,4 +1,5 @@
 using System;
+using Services;
 using Support;
 using UniRx;
 
@@ -7,14 +8,17 @@ namespace States
     public class GameState : GameStateBase<Unit>
     {
         private readonly GameMachine _gameMachine;
-    
+        private readonly WindowsService _windowsService;
+        private readonly WindowResolver _windowResolver;
         private readonly CompositeDisposable _rootDisposable = new();
     
         private const string StateSceneName = "Game";
         
-        public GameState(GameMachine gameMachine)
+        public GameState(GameMachine gameMachine, WindowsService windowsService, WindowResolver windowResolver)
         {
             _gameMachine = gameMachine;
+            _windowsService = windowsService;
+            _windowResolver = windowResolver;
         }
         
         protected override void Init()
@@ -37,7 +41,7 @@ namespace States
             var gameRoot = SceneExtensions.LoadSceneRoot<GameRoot>();
 
             gameRoot
-                .Init(new Unit())
+                .Init(new LobbyRoot.Model(OnExit,_windowsService,_windowResolver))
                 .AddTo(subscriptions);
 
             return subscriptions;

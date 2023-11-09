@@ -11,10 +11,10 @@ namespace Services
         {
             _windowsService = windowsService;
         }
-        
-        public PlayConfirmWindow.Model GetPlayConfirmWindowModel(Action onPlayClick)
+
+        public PlayConfirmWindow.Model GetPlayConfirmWindowModel(Action onClick, bool isPlay = true)
         {
-            return new(onPlayClick, _windowsService);
+            return new(onClick, _windowsService, isPlay);
         }
     }
 }

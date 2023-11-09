@@ -1,6 +1,7 @@
 using System;
 using Services;
 using Support;
+using Support.GraphicsGroup;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,26 +12,34 @@ namespace Windows
     {
         public class Model
         {
-            public readonly Action OnPlayClick;
+            public readonly Action OnClick;
             public readonly WindowsService WindowsService;
+            public readonly bool IsPlay;
             
-            public Model(Action onPlayClick, WindowsService windowsService)
+            public Model(Action onClick, WindowsService windowsService, bool isPlay)
             {
-                OnPlayClick = onPlayClick;
+                OnClick = onClick;
                 WindowsService = windowsService;
+                IsPlay = isPlay;
             }
         }
 
         [SerializeField] private Button _playButton;
         [SerializeField] private Button _quitButton;
+
+        [SerializeField] private GraphicsSwitchGroup _playGroup;
+        [SerializeField] private GraphicsSwitchGroup _quitGroup;
         
         protected override void OnOpen()
         {
+            var switchedGroup = ActiveModel.IsPlay ? _playGroup : _quitGroup;
+            switchedGroup.Switch();
+            
             _playButton
                 .OnClickAsObservable()
                 .SafeSubscribe(_ =>
                 {
-                    ActiveModel.OnPlayClick?.Invoke();
+                    ActiveModel.OnClick?.Invoke();
                     ActiveModel.WindowsService.Close();
                 })
                 .AddTo(Disposables);

@@ -40,7 +40,7 @@ namespace States
                 .AddTo(_rootDisposable);
         
             _gameMachine.AddState(new LobbyState(_gameMachine,_windowsService,windowResolver));
-            _gameMachine.AddState(new GameState(_gameMachine));
+            _gameMachine.AddState(new GameState(_gameMachine,_windowsService,windowResolver));
 
             return Observable.ReturnUnit();
         }
